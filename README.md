@@ -1,4 +1,4 @@
-# Mexhihurder
+
 
 
 ## Eksekvering af Programmet
