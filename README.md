@@ -10,6 +10,7 @@ npm start
 > [node-webkit](https://github.com/nwjs/nw.js/) er et eksekverbart *(.exe)* node miljø der køre i chromium.
 
 
+
 **Fil Eksekvering**
 > Min foretrukne metode :+1:
 ````
