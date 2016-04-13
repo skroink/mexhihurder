@@ -1,0 +1,24 @@
+{
+  "name": "mexihurder",
+  "version": "1.0.0",
+  "main": "app/index.html",
+  "scripts": {
+    "start": "nodewebkit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "nodewebkit": "^0.11.6",
+    "grunt": "^1.0.1"
+  },
+  "window": {
+      "title": "Mexihurder",
+      "width": 1024,
+      "height":768,
+      "frame":true
+    },
+  "devDependencies": {},
+  "description": ""
+}

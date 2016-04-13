@@ -1,0 +1,22 @@
+{
+  "name": "mexihurder",
+  "description": "",
+  "main": "index.html",
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "app/libs"
+  ],
+  "dependencies": {
+    "EaselJS": "easeljs#^0.8.2",
+    "preloadjs": "*",
+    "SoundJS": "^0.6.2"
+  }
+}
