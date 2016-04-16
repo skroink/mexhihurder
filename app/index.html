@@ -4,11 +4,21 @@
 	<title>Mexihurder</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body >
+<body onload="">
 	
 	<canvas id="gameCanvas" width="0" height="0" style="border:1px solid black;"></canvas>
-
 	
-	<script src="main.js"></script>
+	<script src="components/EaselJS/lib/easeljs-nw.combined.js"></script>
+	<script>
+	var requirejs = require('requirejs');
+	requirejs(['config'], function() {
+
+		requirejs(['scripts/main'])
+	});
+	</script>
+	
+	<!--<script src="..\scripts/main.js"></script> -->
+	
+
 </body>
 </html>
