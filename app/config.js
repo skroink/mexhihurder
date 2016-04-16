@@ -8,7 +8,7 @@
 
     baseUrl: "app",
     paths: {
-    	easel: 'components/EaselJS/lib/easeljs-nw.combined',
+    	easel: 'components/EaselJS/lib/easeljs-0.8.2.combined',
     	scripts: 'scripts'
     }
 });
