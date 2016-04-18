@@ -15,7 +15,7 @@
     "app/libs"
   ],
   "dependencies": {
-    "EaselJS": "https://github.com/skroink/EaselJS/tarball/99b5282f2850bff949c0d4d35849198cecf861f7",
+    "EaselJS": "https://github.com/skroink/EaselJS/tarball/fb0ab01c8a46d24a7958c7ed037b1e5693cf0611",
     "SoundJS": "^0.6.2",
     "requirejs": "^2.2.0",
     "PreloadJS": "https://github.com/CreateJS/PreloadJS.git#^0.6.2"
