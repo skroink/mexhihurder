@@ -12,7 +12,7 @@ return new Objects();
 
 
 function Objects() {
-
+	
 	this.mex_arr;
 	this.cact_arr;
 
@@ -38,10 +38,13 @@ function Objects() {
 
 
 function Mexican() {
-	this.x = Math.random() * (300-20) + 20; 
-	this.y = Math.random() * (300-20) + 20;
+	this.x = Math.random() * (150-20) + 20; 
+	this.y = Math.random() * (700-20) + 20;
+	this.velX = 1;
 	this.circle = "hello";
-
+	this.radius = 20;
+	this.player;
+	
 }
 
 function Cactus() {

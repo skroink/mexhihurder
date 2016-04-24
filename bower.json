@@ -18,6 +18,7 @@
     "EaselJS": "https://github.com/skroink/EaselJS/tarball/fb0ab01c8a46d24a7958c7ed037b1e5693cf0611",
     "SoundJS": "^0.6.2",
     "requirejs": "^2.2.0",
-    "PreloadJS": "https://github.com/CreateJS/PreloadJS.git#^0.6.2"
+    "PreloadJS": "https://github.com/CreateJS/PreloadJS.git#^0.6.2",
+    "Collision-Detection-for-EaselJS": "https://github.com/olsn/Collision-Detection-for-EaselJS.git"
   }
 }

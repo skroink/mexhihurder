@@ -17,7 +17,7 @@ define(function (data) {
 function player() {
 	
 	this.message = "hello"
-	this.x = 800;
+	this.x = 400;
 	this.y = 300;
 	this.rad = 50;
 	this.vx;

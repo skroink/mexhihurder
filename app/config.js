@@ -6,7 +6,8 @@
     	soundjs: 'components/SoundJS/lib/soundjs-0.6.2.min',
     	preloadjs: 'components/preloadjs/lib/preloadjs-0.6.2.combined',
     	scripts: 'scripts',
-    	playerjs: 'scripts/player'
+    	playerjs: 'scripts/player',
+    	ndgmr: "components/Collision-Detection-for-EaselJS/src/ndgmr.Collision"
     }
 });
 
