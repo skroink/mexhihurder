@@ -183,7 +183,9 @@ function tickHandler(event) {
 		if(player_obj != null) {
 		var collision = ndgmr.checkPixelCollision(mexican.circle,player_obj,0);
 		if(collision){
-			mexican.velX *= -1;
+			mexican.circle.x -= 20;
+			mexican.velX *= -1,75;
+			
 		}
 
 
@@ -196,7 +198,7 @@ function tickHandler(event) {
 
 		
 	
-		 mexican.velX += 0.1;
+		 mexican.velX += 0.01;
 
 	}
 
