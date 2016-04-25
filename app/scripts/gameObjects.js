@@ -41,6 +41,7 @@ function Mexican() {
 	this.x = Math.random() * (150-20) + 20; 
 	this.y = Math.random() * (700-20) + 20;
 	this.velX = 1;
+	this.velY = 1;
 	this.circle = "hello";
 	this.radius = 20;
 	this.player;

@@ -162,9 +162,26 @@ function init() {
 
 };
 
+
+
+
 function toggleTick() {
 	text.text = "please wait"
-	window.setTimeout(function() {createjs.Ticker.paused = !createjs.Ticker.paused;}, 1250);
+
+	if (createjs.Ticker.paused == true) {
+		text.text = 'press any key to continue';
+		window.setTimeout(function() {
+			window.document.addEventListener('keydown', function() {
+				createjs.Ticker.paused = false;
+			})
+
+		}, 1250);
+	} else createjs.Ticker.paused = !createjs.Ticker.paused;
+
+
+	//window.setTimeout(function() {createjs.Ticker.paused = !createjs.Ticker.paused;}, 1250);
+
+
 	
 }
 
@@ -189,16 +206,30 @@ function tickHandler(event) {
 		}
 
 
-		console.log(collision);
+		//console.log(collision);
 };
 		 mexican.circle.x += mexican.velX;
-		 
+		 mexican.circle.y += mexican.velY;
 		 stage.update();
 
+		 
+		 	if((mexican.circle.y) > (canvas.height/2)-50){ 
+		 		//mexican.velY += -1.01;
+		 		mexican.velY += Math.random() * (-1.3) +0.209;
+		 		//console.log("more than");
+		 	};
 
+
+		 	if(mexican.circle.y < (canvas.height/2)+50){ 
+		 		//mexican.velY += 1.01;
+		 		mexican.velY += Math.random() * (1.3) -0.209;
+		 		//console.log("less than");
+		 	};
+		 	
+		 
+		 	
 		
-	
-		 mexican.velX += 0.01;
+		 mexican.velX += 0.11;
 
 	}
 
@@ -225,13 +256,13 @@ function loadImages() {
 
 
 function drawBG() {
-	var bg = new createjs.Shape();
-	bg.graphics
-	.beginFill('blue').drawRect(0,0,canvas.width,120)
-	.beginFill('yellow').drawRect(0,120,200,canvas.height)
-	.beginFill('green').drawRect(200,120,canvas.width,canvas.height);
-	stage.addChild(bg);
-	stage.update();
+//	var bg = new createjs.Shape();
+//	bg.graphics
+//	.beginFill('blue').drawRect(0,0,canvas.width,120)
+//	.beginFill('yellow').drawRect(0,120,200,canvas.height)
+//	.beginFill('green').drawRect(200,120,canvas.width,canvas.height);
+//	stage.addChild(bg);
+//	stage.update();
 
 }
 	
