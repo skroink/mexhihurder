@@ -39,14 +39,31 @@ function getIndex(id) {
 function loadPlayer() {
  requirejs(["scripts/player"], function (player){
 
- 		
-	player.circle = new createjs.Bitmap(gfx[getIndex("player.gif")].src);
 
+ 	player.spriteData.images = [gfx[getIndex("trump_spritesheet.png")].src];
+ 	player.spriteData.frames = {width:66, height:66};
+ 	player.spriteData.animations  = {stand: 0,
+ 									 wkUp:1,
+ 									 wkRight:2,
+ 									 wkDown:3,
+ 									 wkLeft:4,
+ 									};
+
+ 	console.log(player.spriteData);
+
+ 	player.spritesheet = new createjs.SpriteSheet(player.spriteData);
+ 	//console.log(player.spritesheet);
+
+	//player.circle = new createjs.Bitmap(gfx[getIndex("player.gif")].src);
+
+	player.circle = new createjs.Sprite(player.spritesheet, "stand");
+	//player.circle.animation("stand");
+	
 	player.circle.x = player.x;
 	player.circle.y = player.y;
 
-	player.circle.scaleX = 0.5;
-	player.circle.scaleY = 0.5;
+	player.circle.scaleX = 1;
+	player.circle.scaleY = 1;
 	stage.addChild(player.circle);
  	stage.update();
  	

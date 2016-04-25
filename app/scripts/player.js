@@ -23,7 +23,13 @@ function player() {
 	this.vx;
 	this.vy;
 	this.circle;
-	this.speed = 10;	
+	this.speed = 10;
+
+	this.spriteData = {
+		images:[],
+		frames: {},
+		animations: {}
+	};	
 		};
 
 
