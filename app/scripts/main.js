@@ -22,9 +22,11 @@ var easeljs 	= requirejs('easeljs'),
 
 	createjs.Ticker.paused = true;
 
-function getIndex(val) {
+
+// gets index of gtx, based on 'id' parameter
+function getIndex(id) {
     for (var i = 0; i < gfx.length; i++) {
-        if (gfx[i].id === val) {
+        if (gfx[i].id === id) {
             
             return i;
         }
@@ -33,20 +35,11 @@ function getIndex(val) {
 
 
 
-
 // loads player object 
 function loadPlayer() {
  requirejs(["scripts/player"], function (player){
- 	//console.log(gfx);
-// 	player.circle = new createjs.Shape();
-//	player.circle.graphics
-//	.beginFill('red').drawCircle(player.x,player.y,player.rad);
 
- 	
- 	
- 	
-
-	//player.circle = gfx[getIndex("player.gif")].file; 		
+ 		
 	player.circle = new createjs.Bitmap(gfx[getIndex("player.gif")].src);
 
 	player.circle.x = player.x;
@@ -57,12 +50,6 @@ function loadPlayer() {
 	stage.addChild(player.circle);
  	stage.update();
  	
-	
-	console.log(player.circle.x);
-
-
-	
-	//attachBitmap()
 
  	player_obj = player.circle;
  	console.log(player_obj);
@@ -83,9 +70,6 @@ requirejs(["scripts/gameObjects"], function (Object) {
 	
 	for(var i in Object.mex_arr) {
 		var mexican = Object.mex_arr[i];
-//		mexican.circle = new createjs.Shape();
-//		mexican.circle.graphics
-//		.beginFill("purple").drawCircle(mexican.x,mexican.y,mexican.radius);
 		
 
 		mexican.circle = new createjs.Bitmap(gfx[getIndex("object.png")].src);
@@ -105,24 +89,27 @@ requirejs(["scripts/gameObjects"], function (Object) {
 
 
 function prepCanvas(data) {
-	data.width = window.innerWidth - 16;
-	data.height = window.innerHeight - 32;
-
-
+	data.width = 992;
+	data.height = 752;
 
 	
-	primaryFunctions();
+	window.document.addEventListener("assets",function() {primaryFunctions()});
+	
 	createjs.Ticker.useRAF = true;
 	createjs.Ticker.setFPS(60);
+
+	
+	
 }
 
 
 
 function primaryFunctions() {
 	console.log("loading primary functions");
-	stage.onload = drawBG();
+	drawBG();
 	drawBG.onload = loadObjects();
 	loadObjects.onload = loadPlayer();
+	toggleTick();
 
 	
 }
@@ -135,23 +122,19 @@ function init() {
 
 	stage = new createjs.Stage(canvas);
 	preload = new createjs.LoadQueue(false);
-	startDate = (new Date()).getTime();
+	
 	//
 	
 
 
 	loadBitmaps('app/assets');
 	
-	loadBitmaps.onload = prepCanvas(stage.canvas);
+	prepCanvas(stage.canvas);
 	
 	
 	createjs.Ticker.addEventListener("tick", tickHandler);
 	//console.log(createjs.Ticker.getMeasuredFPS());
-	text = new createjs.Text("hello","bold 40px Arial", "#ff7700");
-	text.textAlign = "right";
-	text.x = stage.canvas.width;
-	stage.addChild(text);
-	primaryFunctions.onload = toggleTick();
+	
 	
 
 
@@ -166,13 +149,16 @@ function init() {
 
 
 function toggleTick() {
+	
 	text.text = "please wait"
+
 
 	if (createjs.Ticker.paused == true) {
 		text.text = 'press any key to continue';
 		window.setTimeout(function() {
 			window.document.addEventListener('keydown', function() {
 				createjs.Ticker.paused = false;
+				startDate = (new Date()).getTime();
 			})
 
 		}, 1250);
@@ -240,29 +226,20 @@ function tickHandler(event) {
 	
 	
 	
-}
-
-}
+}};
 
 
-function loadImages() {
-	
-
-
-
-
-}
 
 
 
 function drawBG() {
-//	var bg = new createjs.Shape();
-//	bg.graphics
-//	.beginFill('blue').drawRect(0,0,canvas.width,120)
-//	.beginFill('yellow').drawRect(0,120,200,canvas.height)
-//	.beginFill('green').drawRect(200,120,canvas.width,canvas.height);
-//	stage.addChild(bg);
-//	stage.update();
+	var bg = new createjs.Bitmap(gfx[getIndex("canvas.png")].src);
+	stage.addChild(bg);
+	text = new createjs.Text("hello","bold 40px Arial", "#000");
+	text.textAlign = "left";
+	text.x = 0;
+	stage.addChild(text);
+	stage.update();
 
 }
 	
@@ -279,11 +256,6 @@ function attachBitmap(img, object) {
 	//image.y = canvas.height / 3;	
 	stage.update();
 }
-
-
-
-window.document.onload = init();
-
 
 function loadBitmaps() {
 	fs.readdir("app/assets",function(err, files) {
@@ -304,8 +276,23 @@ function loadBitmaps() {
 
 				
 		})
+		window.document.dispatchEvent(loadComplete);
 		console.log(gfx);
 	})
-
-
 }
+
+
+// custom event for stack loading
+var loadComplete = new window.CustomEvent(
+	"assets", 
+	{
+		detail: {
+			message: "Hello World!",
+			time: new Date(),
+		},
+		bubbles: true,
+		cancelable: true
+	}
+);
+
+window.document.onload = init();
