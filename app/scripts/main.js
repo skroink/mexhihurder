@@ -15,7 +15,7 @@ var easeljs 	= requirejs('easeljs'),
 	preload,
 	startDate,
 	gfx=[],
-	gameLoop,
+	gameLoop=false,
 	text,
 	mexicans=[],
 	player_obj;
@@ -62,8 +62,8 @@ function loadPlayer() {
 	player.circle.x = player.x;
 	player.circle.y = player.y;
 
-	player.circle.scaleX = 1;
-	player.circle.scaleY = 1;
+	player.circle.scaleX = 2;
+	player.circle.scaleY = 2;
 	stage.addChild(player.circle);
  	stage.update();
  	
@@ -92,7 +92,6 @@ requirejs(["scripts/gameObjects"], function (Object) {
 		mexican.circle = new createjs.Bitmap(gfx[getIndex("object.png")].src);
 		mexican.circle.x = mexican.x;
 		mexican.circle.y = mexican.y;
-		console.log(mexican.circle.x + " " + mexican.circle.y);
 		stage.addChild(mexican.circle);
 		stage.update();
 		
@@ -175,7 +174,11 @@ function toggleTick() {
 		window.setTimeout(function() {
 			window.document.addEventListener('keydown', function() {
 				createjs.Ticker.paused = false;
-				startDate = (new Date()).getTime();
+
+				if(gameLoop != true) {startDate = (new Date()).getTime();}
+				gameLoop = true;
+				window.document.removeEventListener('keydown');
+				
 			})
 
 		}, 1250);
@@ -183,7 +186,7 @@ function toggleTick() {
 
 
 	//window.setTimeout(function() {createjs.Ticker.paused = !createjs.Ticker.paused;}, 1250);
-
+	
 
 	
 }
