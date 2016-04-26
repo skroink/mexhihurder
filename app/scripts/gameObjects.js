@@ -45,6 +45,11 @@ function Mexican() {
 	this.circle = "hello";
 	this.radius = 20;
 	this.player;
+	this.spriteData = {
+		images:[],
+		frames: {},
+		animations: {}
+	};	
 	
 }
 

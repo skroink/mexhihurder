@@ -87,11 +87,29 @@ requirejs(["scripts/gameObjects"], function (Object) {
 	
 	for(var i in Object.mex_arr) {
 		var mexican = Object.mex_arr[i];
-		
+		mexican.spriteData.images = [gfx[getIndex("mexican_spritesheet.png")].src];
+ 		mexican.spriteData.frames = {width:66, height:66};
+ 		mexican.spriteData.animations  = {stand: 0,
+ 										 wkUp:1,
+ 										 wkRight:2,
+ 										 wkDown:3,
+ 										 wkLeft:4,
+ 											};
 
-		mexican.circle = new createjs.Bitmap(gfx[getIndex("object.png")].src);
+ 	//console.log(player.spriteData);
+
+ 	mexican.spritesheet = new createjs.SpriteSheet(mexican.spriteData);
+ 	//console.log(player.spritesheet);
+
+	//player.circle = new createjs.Bitmap(gfx[getIndex("player.gif")].src);
+
+	mexican.circle = new createjs.Sprite(mexican.spritesheet, "stand");
+
+	//	mexican.circle = new createjs.Bitmap(gfx[getIndex("object.png")].src);
 		mexican.circle.x = mexican.x;
 		mexican.circle.y = mexican.y;
+		mxican.circle.scaleY = 2;
+		mexican.circle.scaleX= 2;
 		stage.addChild(mexican.circle);
 		stage.update();
 		
