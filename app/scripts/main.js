@@ -108,7 +108,7 @@ requirejs(["scripts/gameObjects"], function (Object) {
 	//	mexican.circle = new createjs.Bitmap(gfx[getIndex("object.png")].src);
 		mexican.circle.x = mexican.x;
 		mexican.circle.y = mexican.y;
-		mxican.circle.scaleY = 2;
+		mexican.circle.scaleY = 2;
 		mexican.circle.scaleX= 2;
 		stage.addChild(mexican.circle);
 		stage.update();
