@@ -36,15 +36,21 @@ function Objects() {
 
 };
 
+var maxX = 992/2,
+	minX = 132
+
+	maxY = 752,
+	minY = 132;
 
 function Mexican() {
-	this.x = Math.random() * (150-20) + 20; 
-	this.y = Math.random() * (700-20) + 20;
+	this.x = Math.random() * (maxX - minX) + minX; 
+	this.y = Math.random() * (maxY - minY) + minY;
 	this.velX = 1;
 	this.velY = 1;
 	this.circle = "hello";
 	this.radius = 20;
 	this.player;
+	this.dead = false;
 	this.spriteData = {
 		images:[],
 		frames: {},
