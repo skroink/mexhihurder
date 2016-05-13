@@ -302,7 +302,7 @@ function tickHandler(event) {
 				/// and increase velX by 0.11 by each iteration.
 				/// Also moves mexican in "random" directions based
 				/// on placement from mid of canvas.
-				mexican.move();
+				mexican.move(canvas.height);
 
 				/////////////////////////////////////////////////////////////////////
 				/// limits the movement of mexican

@@ -80,7 +80,7 @@ function Mexican() {
 	};
 	
 
-	this.move = function() {
+	this.move = function(canvasHeight) {
 		this.bitmap.x += this.velX;
 		this.bitmap.y += this.velY;
 		this.velX += 0.11;
@@ -132,11 +132,11 @@ function Mexican() {
 			// speed limiter
 			// limits the velocity (x,y) 
 			// to static var speed
-			if(mexican.velX > mexican.speed)
-			mexican.velX = mexican.speed;
+			if(this.velX > this.speed)
+			this.velX = this.speed;
 
-			if(mexican.velY > mexican.speed)
-			mexican.velY = mexican.speed;
+			if(this.velY > this.speed)
+			this.velY = this.speed;
 
 		};
 
