@@ -11,12 +11,12 @@ define(function (data) {
 	// results in instatiation of doKeyDown() function.
 	window.document.addEventListener("keydown",doKeyDown, true);
 	window.document.addEventListener("keyup", doKeyUp, true);
-	return player = new player;
+	return player = new Player;
 		});
 
 
 // player object.
-function player() {
+function Player() {
 	
 	this.message = "hello"
 	this.x = 400;
@@ -24,7 +24,7 @@ function player() {
 	this.rad = 50;
 	this.vx = 0;
 	this.vy = 0;
-	this.circle;
+	this.bitmap;
 	this.speed = 8;
 	this.friction = 0.98;
 	this.accel = 1.5;
@@ -54,7 +54,7 @@ function doKeyUp(e) {
 	delete keys[e.which]
 
 	if(Object.keys(keys).length == 0)
-		player.circle.gotoAndPlay("stand");
+		player.bitmap.gotoAndPlay("stand");
 
 	//console.log(keys);
 };
@@ -74,25 +74,49 @@ function keyAction(e){
 		if(key == 37 && player.vx > -player.speed){
 			//console.log('left');
 			player.vx =-8; 
-			player.circle.gotoAndPlay("wkLeft");
+			player.bitmap.gotoAndPlay("wkLeft");
 		};
 		// up
 		if(key == 38 && player.vy > -player.speed){
 			//console.log('up');
 			player.vy=-8;
-			player.circle.gotoAndPlay("wkUp");
+			player.bitmap.gotoAndPlay("wkUp");
 		};
 		// right
 		if(key == 39 && player.vx < player.speed){
 			//console.log('right');
 			player.vx=8;
-			player.circle.gotoAndPlay("wkRight");
+			player.bitmap.gotoAndPlay("wkRight");
 		};
 		// down
 		if(key == 40 && player.vy < player.speed){
 			//console.log('down');
 			player.vy=8;
-			player.circle.gotoAndPlay("wkDown");	
+			player.bitmap.gotoAndPlay("wkDown");	
 		};
 	};
 };
+
+
+
+
+
+
+Player.prototype.moveSpeed = function() {
+	if (player.vx < player.speed * 0.04 && player.vx > 0 
+			|| player.vx > -player.speed * 0.04 && player.vx < 0) {
+			player.vx = 0;
+		} else {
+			player.vx *= player.friction
+		};
+
+		if (player.vy < player.speed * 0.04 && player.vy > 0 
+			|| player.vy > -player.speed * 0.04 && player.vy < 0) {
+			player.vy = 0;
+		} else {
+			player.vy *= player.friction
+		};
+		player.bitmap.x += player.vx;
+		player.bitmap.y += player.vy;
+};
+
