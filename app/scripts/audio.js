@@ -53,6 +53,18 @@ function assignAudio(audio) {
 
 	"select" : function(track) {
 		return selectTrack(track);
+	},
+	"random" : function() {
+		var select = sounds.filter(function(n) {
+			return n.id != "bgm";
+		});
+		//select = select[Math.random(select.length)];
+		console.log(select);
+		select = sounds[Math.round(Math.random() * (select.length - 1))];
+		selectTrack(select.id).play();
+		console.log(selectTrack(select.id));
+
+
 	}
 	}
 
@@ -61,4 +73,5 @@ function assignAudio(audio) {
 var selectTrack = function(audioTrack) {
 	return window.document.getElementById(audioTrack);
 };
+
 

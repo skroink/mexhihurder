@@ -14,7 +14,6 @@ function Objects() {
 	
 	this.mex_arr;
 	this.spritesheet;
-	this.buffs;
 	this.populate_mex = function(i_num) {
 		for(var i = 0; i < i_num; i++) {
 		mex_collection.push(new Mexican);		

@@ -34,11 +34,6 @@ createjs.Ticker.paused = true;
 
 	
 
-
-
-
-
-
 // loads player object 
 function loadPlayer() {
 	requirejs(["scripts/player"], function(p) {
@@ -152,7 +147,6 @@ function prepCanvas() {
 
 	createjs.Ticker.useRAF = true;
 	createjs.Ticker.setFPS(60);
-	primaryFunctions();
 
 	console.log("loading primary functions");
 	drawBG();
@@ -211,7 +205,7 @@ function toggleTick() {
 
 				if (gameLoop != true) {
 					startDate = (new Date()).getTime();
-
+					window.audio.control.random();
 					window.audio.control.play("bgm");
 					window.audio.control.volume("bgm", 0.2);
 					
