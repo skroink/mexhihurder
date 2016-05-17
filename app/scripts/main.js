@@ -14,41 +14,42 @@ var easeljs = requirejs('easeljs'),
 	stage,
 	preload,
 	startDate,
-	gfx = [],
+	sounds,
+	gfx,
+	json = [],
 	gameLoop = false,
 	text,
 	mexicans = [],
-	wall_Bitmap,
-	win = {points: 0,
-			text: 0},
-	player_obj;
+	wall_Bitmap;
+
+
+
+	// GLOBALS
+	window.win = {points: 0,
+				  text: 0 };
+	window.player;
+
 
 createjs.Ticker.paused = true;
 
+	
 
-// gets index of gtx, based on 'id' parameter
-function getIndex(id) {
-	for (var i = 0; i < gfx.length; i++) {
-		if (gfx[i].id === id) {
 
-			return i;
-		}
-	}
-};
+
 
 
 
 // loads player object 
 function loadPlayer() {
-	requirejs(["scripts/player"], function(player) {
+	requirejs(["scripts/player"], function(p) {
 
 
-		player.spriteData.images = [gfx[getIndex("trump_spritesheet.png")].src];
-		player.spriteData.frames = {
+		p.spriteData.images = [gfx[getIndex("trump_spritesheet.png")].src];
+		p.spriteData.frames = {
 			width: 66,
 			height: 66
 		};
-		player.spriteData.animations = {
+		p.spriteData.animations = {
 			stand: 2,
 			wkUp: [3, 5],
 			wkRight: [6, 8],
@@ -56,33 +57,33 @@ function loadPlayer() {
 			wkLeft: [9, 11],
 		};
 
-		console.log(player.spriteData);
+		console.log(p.spriteData);
 
-		player.spritesheet = new createjs.SpriteSheet(player.spriteData);
+		p.spritesheet = new createjs.SpriteSheet(p.spriteData);
 	
 
 		
 
-		player.bitmap = new createjs.Sprite(player.spritesheet, "stand");
-		player.bitmap.framerate = 1000;
+		p.bitmap = new createjs.Sprite(p.spritesheet, "stand");
+		p.bitmap.framerate = 1000;
 		
 
-		player.bitmap.x = player.x;
-		player.bitmap.y = player.y;
+		p.bitmap.x = p.x;
+		p.bitmap.y = p.y;
 
-		player.bitmap.scaleX = 2;
-		player.bitmap.scaleY = 2;
-		stage.addChild(player.bitmap);
-		stage.update();
+		p.bitmap.scaleX = 2;
+		p.bitmap.scaleY = 2;
+		stage.addChild(p.bitmap);
+		
 
-
-		player_obj = player;
-		console.log(player_obj);
+		window.player = p;
+		
+		console.log();
 
 		// apply player to objects
 		for (var i in mexicans) {
 			var mexican = mexicans[i];
-			mexican.player = player;
+			mexican.player = window.player;
 		};
 
 	});
@@ -90,7 +91,11 @@ function loadPlayer() {
 
 // loads various game objects (mexican, cactus, buffs etc.)
 function loadObjects() {
-	requirejs(["scripts/gameObjects"], function(Object) {
+	
+
+	window.addEventListener("buffLoaded", function() {
+		requirejs(["scripts/gameObjects"], function(Object) {
+	
 		Object.populate_mex(5);
 
 		for (var i in Object.mex_arr) {
@@ -123,17 +128,21 @@ function loadObjects() {
 			mexican.bitmap.scaleY = 2;
 			mexican.bitmap.scaleX = 2;
 			stage.addChild(mexican.bitmap);
-			stage.update();
+			
 
 			mexicans.push(mexican);
 
 
 		}
-
+		Object.buff = window.Buff;
+		console.log(Object);
 
 	})
-};
 
+
+	});
+	
+};
 
 function prepCanvas() {
 	stage.canvas.width = 992;
@@ -145,19 +154,12 @@ function prepCanvas() {
 	createjs.Ticker.setFPS(60);
 	primaryFunctions();
 
-
-}
-
-
-
-function primaryFunctions() {
 	console.log("loading primary functions");
 	drawBG();
+	requirejs(["scripts/buffs"]);
 	drawBG.onload = loadObjects();
 	loadObjects.onload = loadPlayer();
 	toggleTick();
-
-
 }
 
 
@@ -165,31 +167,37 @@ function primaryFunctions() {
 // overall start process.
 function init() {
 
-
+	
 	stage = new createjs.Stage(canvas);
 	preload = new createjs.LoadQueue(false);
+	createjs.Sound.alternateExtensions = ["mp3"];
+	
 
-	//
+	window.document.addEventListener("assets", function(){
+		gfx = window.preloads.gfx;
+		prepCanvas();
+	});
+
+	window.document.addEventListener("soundsLoaded", function(evt) {
+			sounds = window.preloads.audio;
+			console.log(window.preloads);
+			requirejs(["scripts/audio"]);
+			
+	});
 
 
-
-	loadBitmaps('app/assets');
-	window.document.addEventListener("assets", prepCanvas);
-	window.document.addEventListener("assets", function(evt) {
-		console.log(evt.detail);
-	})
 
 
 
 	createjs.Ticker.addEventListener("tick", tickHandler);
-	//console.log(createjs.Ticker.getMeasuredFPS());
-
-
 
 };
 
 
 
+
+
+// Pauses/ Unpauses the canvas tick element
 function toggleTick() {
 
 	text.text = "please wait"
@@ -203,8 +211,13 @@ function toggleTick() {
 
 				if (gameLoop != true) {
 					startDate = (new Date()).getTime();
+
+					window.audio.control.play("bgm");
+					window.audio.control.volume("bgm", 0.2);
+					
 				}
 				gameLoop = true;
+				
 				window.document.removeEventListener('keydown');
 
 			})
@@ -219,31 +232,31 @@ function toggleTick() {
 
 }
 
-
+// handles all logic inside every 'tick'
 function tickHandler(event) {
 
 	if (createjs.Ticker.paused != true) {
 
-		
+		var player = window.player;
 		// player friction, smoother movement
 		////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////// 
-		player_obj.moveSpeed()
+		player.moveSpeed()
 	
 		////////////////////////////////////////////////////////////////////////////////////
 		// wall collision detection => player
-			var wall_player = ndgmr.checkPixelCollision(wall_Bitmap, player_obj.bitmap, 0);
+			var wall_player = ndgmr.checkPixelCollision(wall_Bitmap, player.bitmap, 0);
 			if (wall_player) {
 				var wall_mid = wall_Bitmap.x + (wall_Bitmap.image.width / 2);
 				
-				//console.log(player_obj.bitmap.getBounds());
+				//console.log(player.bitmap.getBounds());
 				
 				if(wall_player.x < wall_mid)
-					player_obj.bitmap.x = (wall_Bitmap.x - 64*2);
+					player.bitmap.x = (wall_Bitmap.x - 64*2);
 
 
 				if(wall_player.x > wall_mid)
-					player_obj.bitmap.x = (wall_Bitmap.x + 64*2);
+					player.bitmap.x = (wall_Bitmap.x + 64*2);
 				
 
 				
@@ -260,13 +273,13 @@ function tickHandler(event) {
 
 			////////////////////////////////////////////////////////////////////////////////////
 			// collision detection => player
-			if (player_obj.bitmap != null) {
-				var collision = ndgmr.checkPixelCollision(mexican.bitmap, player_obj.bitmap, 0);
+			if (player.bitmap != null) {
+				var collision = ndgmr.checkPixelCollision(mexican.bitmap, player.bitmap, 0);
 				if (collision) {
 
 					playerMid = {
-					x: player_obj.bitmap.x + player_obj.bitmap.getBounds().width / 2,
-					y: player_obj.bitmap.y + player_obj.bitmap.getBounds().width / 2
+					x: player.bitmap.x + player.bitmap.getBounds().width / 2,
+					y: player.bitmap.y + player.bitmap.getBounds().width / 2
 				}; 
 				var xDiff = playerMid.x - collision.x,
 				yDiff = playerMid.y - collision.y;
@@ -350,14 +363,14 @@ function tickHandler(event) {
 		var prev_ = mexicans.length;
 		mexicans = mexicans.filter(function(n){return n.dead != true});
 		if(prev_ > mexicans.length) {
-			win.points += 1;
+			window.win.points += 1;
 		};
 
 
 
 		////////////////////////////////////////////////////////////////////////////////////
 		/// updates win.text based on win.points 
-		win.text.text = win.points + " pts."
+		window.win.text.text = window.win.points + " pts."
 
 
 		////////////////////////////////////////////////////////////////////////////////////
@@ -385,37 +398,12 @@ function attachBitmap(img, object) {
 	stage.addChild(image);
 	//image.x = canvas.width / 3;
 	//image.y = canvas.height / 3;	
-	stage.update();
+	
 }
 
-function loadBitmaps() {
-	fs.readdir("app/assets", function(err, files) {
-		if (err) {
-			console.log(err)
-			return
-		};
-		files.forEach(function(f) {
-			var img_name = f,
-				img_src = "assets/" + f,
-				img_file = new createjs.Bitmap("assets" + "/" + f),
-				file = {
-					id: img_name,
-					src: img_src,
-					file: img_file
-				};
 
-
-			gfx.push(file);
-
-
-		})
-
-		console.log(gfx);
-		window.document.dispatchEvent(loadComplete);
-
-	})
-}
-
+// draws background
+// and attaches the text for score
 function drawBG() {
 	var bg = new createjs.Bitmap(gfx[getIndex("canvas.png")].src);
 	wall_Bitmap = new createjs.Bitmap(gfx[getIndex("collision_wall.png")].src);
@@ -428,26 +416,27 @@ function drawBG() {
 	text.x = 0;
 	stage.addChild(text);
 
-	win.text = new createjs.Text("points","bold 40px Arial", "#000");
-	win.text.textAlign = "left";
-	win.text.y = 45;
-	stage.addChild(win.text);
-	stage.update();
+	window.win.text = new createjs.Text("points","bold 40px Arial", "#000");
+	window.win.text.textAlign = "left";
+	window.win.text.y = 45;
+	stage.addChild(window.win.text);
+	
 
 }
 
+// gets index of gtx, based on 'id' parameter
+function getIndex(id) {
+	for (var i = 0; i < gfx.length; i++) {
+		if (gfx[i].id === id) {
 
-// custom event for stack loading
-var loadComplete = new window.CustomEvent(
-	"assets", {
-		detail: {
-			message: "Hello World!",
-			time: new Date(),
-		},
-		bubbles: true,
-		cancelable: true
+			return i;
+		}
 	}
-);
+};
 
 
+
+requirejs(["scripts/listeners"]);
+requirejs(["scripts/preload"]);
 init()
+

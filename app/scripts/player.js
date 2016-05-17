@@ -11,10 +11,11 @@ define(function (data) {
 	// results in instatiation of doKeyDown() function.
 	window.document.addEventListener("keydown",doKeyDown, true);
 	window.document.addEventListener("keyup", doKeyUp, true);
+	
 	return player = new Player;
 		});
 
-
+window.a = "I'm global";
 // player object.
 function Player() {
 	
@@ -33,8 +34,8 @@ function Player() {
 		images:[],
 		frames: {},
 		animations: {}
-	};	
-		};
+	}
+};
 
 
 // function that take the parameter e (pressed key), and returns it 
@@ -64,11 +65,7 @@ function doKeyUp(e) {
 // and adds/substracts to the x/y axis of the player module.
 // based on the key pressed.
 function keyAction(e){
-	for(var key in e){
-	
-
-
-		
+	for(var key in e){		
 		
 		// left 
 		if(key == 37 && player.vx > -player.speed){
