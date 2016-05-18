@@ -77,7 +77,6 @@ function loadAssets() {
 		
 		
 		window.document.dispatchEvent(window.loadComplete);	
-		console.log(window.preloads);
 		//console.log(sounds);
 	})
 };

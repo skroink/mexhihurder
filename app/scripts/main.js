@@ -32,7 +32,43 @@ var easeljs = requirejs('easeljs'),
 
 createjs.Ticker.paused = true;
 
-	
+function loadBuffs() {
+	requirejs(["scripts/buffs"], function() {
+		
+		buffs = window.buffs;
+		buffs.construct(2);
+
+
+		for (buff in buffs.array) {
+			buff = buffs.array[buff];
+			console.log(buff);
+			
+			buff.spriteData.images = [gfx[getIndex("objects_spritesheet.png")].src];
+			
+			buff.spriteData.frames = {
+				width: 66,
+				height: 66
+			};
+			buff.spriteData.animations = {
+				toupe:7,
+				eagle:8,
+				flag:6,
+				money:9,
+				cactus:2,
+				tequila:1,
+				taco:4,
+				chili:0,
+				tomato:3
+			};
+			buff.spritesheet = new createjs.SpriteSheet(buff.spriteData);
+			buff.bitmap = new createjs.Sprite(buff.spritesheet, buff.id)
+		};
+
+
+
+		console.log(window.buffs);
+	});
+};	
 
 // loads player object 
 function loadPlayer() {
@@ -88,7 +124,7 @@ function loadPlayer() {
 function loadObjects() {
 	
 
-	window.addEventListener("buffLoaded", function() {
+	
 		requirejs(["scripts/gameObjects"], function(Object) {
 	
 		Object.populate_mex(5);
@@ -135,7 +171,7 @@ function loadObjects() {
 	})
 
 
-	});
+	
 	
 };
 
@@ -150,7 +186,7 @@ function prepCanvas() {
 
 	console.log("loading primary functions");
 	drawBG();
-	requirejs(["scripts/buffs"]);
+	loadBuffs();
 	drawBG.onload = loadObjects();
 	loadObjects.onload = loadPlayer();
 	toggleTick();
@@ -180,9 +216,6 @@ function init() {
 	});
 
 
-
-
-
 	createjs.Ticker.addEventListener("tick", tickHandler);
 
 };
@@ -205,7 +238,7 @@ function toggleTick() {
 
 				if (gameLoop != true) {
 					startDate = (new Date()).getTime();
-					window.audio.control.random();
+					//window.audio.control.random();
 					window.audio.control.play("bgm");
 					window.audio.control.volume("bgm", 0.2);
 					

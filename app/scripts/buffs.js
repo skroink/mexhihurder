@@ -1,10 +1,36 @@
-define(function() {
-	b = new Buff();
-	b.id = "toupe";
-	b.type = "buff";
-	window.Buff = b;
-	return window.document.dispatchEvent(window.buffLoaded);
-})
+
+
+window.buffs = {
+	'array' : [],
+	'construct' : construct
+};
+
+function construct(pos,neg) {
+	for (i = 0; i < pos; i++) {
+		b = new Buff();
+		b.type="buff";
+		var list = ['toupe','eagle','flag','money'];
+		list = list[Math.round(Math.random() * (list.length - 1))];
+		b.id = list;
+
+		window.buffs.array.push(b);
+	}
+
+	for (i = 0; i < neg; i++) {
+		b = new Buff();
+		b.type="debuff";
+		var list = ['cactus','tequila','taco','chili','tomato'];
+		list = list[Math.round(Math.random() * (list.length - 1))];
+		b.id = list;
+
+
+
+		window.buffs.array.push(b);
+	}	
+
+	
+}
+
 
 function Buff() {
 	this.id;
@@ -13,7 +39,11 @@ function Buff() {
 	this.x;
 	this.y;
 	this.bitmap;
-	this.spriteData;
+	this.spriteData = {
+		images:[],
+		frames: {},
+		animations: {}
+	};
 	this.effect;
 	
 	this.effects = {
@@ -52,10 +82,8 @@ Buff.prototype.run = function() {
 			}
 		} catch(err){
 			console.log(err);
-		}
-		
-		
-}
+		}		
+};
 
 
 
