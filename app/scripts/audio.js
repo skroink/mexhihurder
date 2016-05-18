@@ -34,9 +34,7 @@ function assignAudio(audio) {
 
 
 
-  var audio = {
-	
-
+ var audio = {
 	control: {
 	'play': function(track) {
 
@@ -63,12 +61,8 @@ function assignAudio(audio) {
 		select = sounds[Math.round(Math.random() * (select.length - 1))];
 		selectTrack(select.id).play();
 		console.log(selectTrack(select.id));
-
-
 	}
-	}
-
-};
+}};
 
 var selectTrack = function(audioTrack) {
 	return window.document.getElementById(audioTrack);

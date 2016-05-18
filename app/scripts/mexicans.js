@@ -1,30 +1,24 @@
 
-var mex_collection 		= [];
+
 
 
 
 define(function () {
 
-return new Objects();
+return new Mexicans();
 });
 
 
 
-function Objects() {
+function Mexicans() {
 	
-	this.mex_arr;
-	this.spritesheet;
-	this.populate_mex = function(i_num) {
+	this.list = [];
+	this.construct = function(i_num) {
 		for(var i = 0; i < i_num; i++) {
-		mex_collection.push(new Mexican);		
+		this.list.push(new Mexican);		
 			};
-		this.mex_arr = mex_collection;
+		
 	};
-
-	
-	
-
-
 };
 
 var maxX = 992/2,

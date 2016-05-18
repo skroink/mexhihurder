@@ -1,29 +1,28 @@
 define(function() {
 	loadAssets()
 	return;
-})
-
+});
 
 var fs = require('fs');
-
 window.preloads = {
 	json: [],
 	gfx: [],
 	audio: []
 };
 
-
-
 function loadAssets() {
+	var loadbar = window.document.getElementById("splashLoad");
+
 	fs.readdir("app/assets", function(err, files) {
 		if (err) {
 			console.log(err)
 			return
 		};
-
-
-
+		loadbar.max = files.length;
+		
+		
 		files.forEach(function(f) {
+
 			var extension = f.split('.').pop();
 
 			if(extension == "json") {
@@ -66,17 +65,27 @@ function loadAssets() {
 				window.preloads.audio.push(sound);
 				if(window.preloads.audio.length == countAudio())
 					window.document.dispatchEvent(window.soundLoad);
-
-
 			}
-
+			
 		})
-
+		timeOut();
 		////////////////////////////////////////////////////////////////////////////////////
 		/// dispatches custom event "load Complete"
+		function timeOut() {
+		setTimeout(function() {
+			if(loadbar.value < loadbar.max){
+			   loadbar.value ++;
+			   timeOut();
+
+			}
+			else{
+				window.document.getElementById("splashText").innerHTML = "press any key to continue";
+				window.document.dispatchEvent(window.loadComplete);	
+			}
+		},100)
+	};
+
 		
-		
-		window.document.dispatchEvent(window.loadComplete);	
 		//console.log(sounds);
 	})
 };

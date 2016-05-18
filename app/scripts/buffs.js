@@ -1,17 +1,23 @@
-
-
 window.buffs = {
 	'array' : [],
 	'construct' : construct
 };
 
 function construct(pos,neg) {
+	var lastBuff,
+		lastDebuff;
 	for (i = 0; i < pos; i++) {
 		b = new Buff();
 		b.type="buff";
 		var list = ['toupe','eagle','flag','money'];
+		if(lastBuff != undefined){
+			list = list.filter(function(n) {
+				return n != lastBuff;
+			});
+		}
 		list = list[Math.round(Math.random() * (list.length - 1))];
 		b.id = list;
+		lastBuff = list;
 
 		window.buffs.array.push(b);
 	}
@@ -21,6 +27,11 @@ function construct(pos,neg) {
 		b.type="debuff";
 		var list = ['cactus','tequila','taco','chili','tomato'];
 		list = list[Math.round(Math.random() * (list.length - 1))];
+		if(lastBuff != undefined){
+			list = list.filter(function(n) {
+				return n != lastDebuff;
+			});
+		}
 		b.id = list;
 
 
@@ -49,9 +60,9 @@ function Buff() {
 	this.effects = {
 		buff: {
 			'toupe': function() {window.audio.control.play("beatmexico")},
-			'eagle': function() {},
-			'flag': function() {},
-			'money': function() {}
+			'eagle': function() {window.audio.control.play("runningnotrunning")},
+			'flag': function() {window.audio.control.play("bestpresident")},
+			'money': function() {window.audio.control.play("reallyrich")}
 		},
 		debuff: {
 			'cactus': function() {console.log('cactus');  },

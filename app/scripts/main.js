@@ -125,12 +125,12 @@ function loadObjects() {
 	
 
 	
-		requirejs(["scripts/gameObjects"], function(Object) {
+		requirejs(["scripts/mexicans"], function(m) {
 	
-		Object.populate_mex(5);
+		m.construct(5);
 
-		for (var i in Object.mex_arr) {
-			var mexican = Object.mex_arr[i];
+		for (var i in m.list) {
+			var mexican = m.list[i];
 			mexican.spriteData.images = [gfx[getIndex("mexican_spritesheet.png")].src];
 			mexican.spriteData.frames = {
 				width: 66,
@@ -165,9 +165,7 @@ function loadObjects() {
 
 
 		}
-		Object.buff = window.Buff;
-		console.log(Object);
-
+		
 	})
 
 
@@ -176,8 +174,7 @@ function loadObjects() {
 };
 
 function prepCanvas() {
-	stage.canvas.width = 992;
-	stage.canvas.height = 752;
+	
 
 
 
@@ -239,6 +236,9 @@ function toggleTick() {
 				if (gameLoop != true) {
 					startDate = (new Date()).getTime();
 					//window.audio.control.random();
+					stage.canvas.width = 992;
+					stage.canvas.height = 752;
+					window.buffs.array[0].run();
 					window.audio.control.play("bgm");
 					window.audio.control.volume("bgm", 0.2);
 					
