@@ -13,7 +13,6 @@ var easeljs = requirejs('easeljs'),
 
 	stage,
 	preload,
-	startDate,
 	sounds,
 	gfx,
 	json = [],
@@ -28,6 +27,23 @@ var easeljs = requirejs('easeljs'),
 	window.win = {points: 0,
 				  text: 0 };
 	window.player;
+
+	window.time = {
+		startDate: undefined,
+		currentTime: undefined,
+		time: undefined,
+		loop: true,
+		pausedTime: 0,
+		pause: function() {
+			if(window.time.loop != false){
+				window.time.loop = false;
+			}else 
+			if(window.time.loop != true){
+				
+				window.time.loop = true;
+				
+			}},
+	};
 
 
 createjs.Ticker.paused = true;
@@ -234,13 +250,13 @@ function toggleTick() {
 				createjs.Ticker.paused = false;
 
 				if (gameLoop != true) {
-					startDate = (new Date()).getTime();
+					window.time.startDate = (new Date()).getTime();
 					//window.audio.control.random();
 					stage.canvas.width = 992;
 					stage.canvas.height = 752;
 					window.buffs.array[0].run();
-					window.audio.control.play("bgm");
-					window.audio.control.volume("bgm", 0.2);
+					//window.audio.control.play("bgm");
+					//window.audio.control.volume("bgm", 0.2);
 					
 				}
 				gameLoop = true;
@@ -404,9 +420,14 @@ function tickHandler(event) {
 		/// updates timer
 		/// this is based on startDate and the new value "currentTime"
 		/// divides by "1000" to convert "time" to seconds.
-		var currentTime = (new Date()).getTime();
-		var time = Math.floor((currentTime - startDate) / 1000);
-		text.text = (120 - time) + "s";
+		if(window.time.loop != false) {
+			window.time.currentTime = (new Date()).getTime() - window.time.pausedTime;
+			//window.time.startDate = window.time.pausedTimesed
+		window.time.time = Math.floor((window.time.currentTime - window.time.startDate) / 1000);
+	} else {
+		window.time.pausedTime = (new Date()).getTime() - window.time.currentTime;
+	}
+		text.text = (120 - window.time.time) + "s";
 
 		
 

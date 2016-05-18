@@ -62,10 +62,17 @@ function Buff() {
 			'toupe': function() {window.audio.control.play("beatmexico")},
 			'eagle': function() {window.audio.control.play("runningnotrunning")},
 			'flag': function() {window.audio.control.play("bestpresident")},
-			'money': function() {window.audio.control.play("reallyrich")}
+			
+			'money': function() {window.audio.control.play("reallyrich")
+								window.time.loop = false;
+								setTimeout(function(){
+									window.time.loop = true
+								},5000);}
+
+								
 		},
 		debuff: {
-			'cactus': function() {console.log('cactus');  },
+			'cactus': function() {},
 			'tequila': function(){},
 			'taco': function() {},
 			'chili': function() {},
