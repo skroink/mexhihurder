@@ -118,8 +118,8 @@ function loadPlayer() {
 		p.bitmap.x = p.x;
 		p.bitmap.y = p.y;
 
-		p.bitmap.scaleX = 2;
-		p.bitmap.scaleY = 2;
+		p.bitmap.scaleX = 1.5;
+		p.bitmap.scaleY = 1.5;
 		stage.addChild(p.bitmap);
 		
 
@@ -143,7 +143,7 @@ function loadObjects() {
 	
 		requirejs(["scripts/mexicans"], function(m) {
 	
-		m.construct(5);
+		m.construct(15);
 
 		for (var i in m.list) {
 			var mexican = m.list[i];
@@ -172,8 +172,8 @@ function loadObjects() {
 			//	mexican.bitmap = new createjs.Bitmap(gfx[getIndex("object.png")].src);
 			mexican.bitmap.x = mexican.x;
 			mexican.bitmap.y = mexican.y;
-			mexican.bitmap.scaleY = 2;
-			mexican.bitmap.scaleX = 2;
+			mexican.bitmap.scaleY = 1.4;
+			mexican.bitmap.scaleX = 1.4;
 			stage.addChild(mexican.bitmap);
 			
 
@@ -255,8 +255,8 @@ function toggleTick() {
 					stage.canvas.width = 992;
 					stage.canvas.height = 752;
 					window.buffs.array[0].run();
-					//window.audio.control.play("bgm");
-					//window.audio.control.volume("bgm", 0.2);
+					window.audio.control.play("bgm");
+					window.audio.control.volume("bgm", 0.2);
 					
 				}
 				gameLoop = true;

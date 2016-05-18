@@ -68,7 +68,7 @@ function Mexican() {
 	this.move = function(canvasHeight) {
 		this.bitmap.x += this.velX;
 		this.bitmap.y += this.velY;
-		this.velX += 0.11;
+		this.velX -= 0.05;
 
 		// "random Movement" or circular movement
 		//  mexicans always migrate to middle of canvas.

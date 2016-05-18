@@ -1,4 +1,4 @@
 @echo off
-start ./node_modules/nodewebkit/nodewebkit/nw.exe
+npm install && bower install
 pause
 exit

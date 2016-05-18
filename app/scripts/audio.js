@@ -10,22 +10,27 @@ var sounds = window.preloads.audio;
 function assignAudio(audio) {
 	
 	for (sound in sounds) {
-	
 	sound = sounds[sound];
 	var audioPath = "./assets/",
 		audioElement = window.document.createElement('audio'),
 		source = window.document.createElement('source');
 
+	
+	
 	source.src = audioPath + sound.src;
 	source.type = 'audio/ogg';
 	audioElement.id = sound.id;
 	window.document.body.appendChild(audioElement);
 	audioElement.appendChild(source);
+	
 	var json = window.preloads.json[0]
 	var filter = json.statements.filter(function(n) {
 		return n.id == sound.id;
 	});
 	
+	if(sound.id == 'bgm' )
+		audioElement.loop = "loop";
+
 	if(filter.length != 0)
 	audioElement.title = filter[0].statement;
 	
