@@ -34,7 +34,7 @@ function Mexican() {
 	this.velY = 1;
 	this.bitmap;
 	this.radius = 20;
-	this.speed = 4;
+	this.speed = 3;
 	this.player;
 	this.dead = false;
 	this.spriteData = {

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mexihurder</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+
+<style type="text/css">
+	progress {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+
+progress::-moz-progress-bar {
+    background-color: #CC0000;
+    border-radius: 3px;
+}
+
+</style>
+<body style="background-image: url('assets/splash.jpg'); background-size: 100%;background-repeat: no-repeat; background-color: #FFD799; ">
+	<div id="container" style="overflow: hidden">
+	<div id="menu" style="visibility: hidden ;overflow: hidden"> 
+		<ul>
+	<li><a ><button onclick="resume()">RESUME</button></a></li>
+	<li><button onclick="restart()">RESTART</button></li>
+	<li><a href="index.html"><button>MAIN MENU</button></a></li>
+	<li><button>EXIT</button>
+	</ul>
+	</div>
+
+
+
+<script>
+	function resume() {
+		window.document.getElementById("menu").style.visibility = "hidden";
+		window.toggleTick();
+		window.time.pause();
+	}
+
+	function restart() {
+		window.document.getElementById("menu").style.visibility = "hidden";
+		window.reload();
+	}
+
+</script>
+
+
+	<canvas id="gameCanvas" width="0" height="0" style="border:0px solid black;margin:0px;position: absolute; left:0px;top:0px"></canvas>
+	</div>
+	<div>
+	<div id="container" style="margin-top: 30%; overflow: hidden">
+	<div style="width:70%; margin-left:35%; margin-bottom: 5%"> <img src="assets/loading.gif"></div>
+	<progress id="splashLoad" value="0" style="width:70%; height:40px; margin-left:15%;"></progress>
+	<h1 id="splashText" style="text-align:center; font-family:Arial, Helvetica, sans-serif; text-transform: uppercase">loading</h1>
+	</div>	</div>
+	<script>
+	var requirejs = require('requirejs');
+	requirejs(['config'], function() {
+
+		requirejs(['scripts/main'])
+	});
+	</script> 
+	
+	<style type="text/css">
+	@font-face { font-family: courier; src: url('src/Courier Prime bold.ttf'); } 
+		
+		#menu {
+			z-index: 2;
+			position: absolute;
+			float: left;
+			margin-top: 200;
+			top: 25%;
+			left:0;
+			width: 100%;
+			background-color: rgba(255,255,255,0.7);
+		}
+
+		ul {
+			padding-left: 0px;
+		}
+
+		li {
+			list-style-type: none;
+			vertical-align: middle;
+  			text-align: center;
+		}
+
+		button {
+			font-family: courier;
+			background-color: rgba(255, 255, 255, 0.0);
+			font-size: 25px;
+			border: none;
+			padding: 15px 32px;
+			text-align: center;
+			margin: 4px 2px;
+			color:rgb(53, 53, 53);
+			position:relative;
+		}
+
+		button:hover{
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+	</style>
+
+
+
+</body>
+</html>

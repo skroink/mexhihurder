@@ -61,7 +61,9 @@ var easeljs = requirejs('easeljs'),
 		}
 	};
 
-
+window.update = function() {
+	stage.update();
+}	
 
 createjs.Ticker.paused = true;
 
@@ -231,7 +233,7 @@ window.reload = function() {
 
 	stage.canvas.width = 0;
 	stage.canvas.height = 0;
-	toggleTick();
+	window.toggleTick();
 	window.player = undefined;
 	stage.removeAllChildren();
 	stage.clear()
@@ -261,7 +263,7 @@ function prepCanvas() {
 	loadBuffs();
 	drawBG.onload = loadObjects();
 	loadObjects.onload = loadPlayer();
-	toggleTick();
+	window.toggleTick();
 }
 
 
@@ -278,6 +280,8 @@ function init() {
 		requirejs(["scripts/audio"]);		
 	}
 
+
+	
 
 
 	window.document.addEventListener("assets", function(){
@@ -302,10 +306,17 @@ function init() {
 
 
 
-
+function menu(e) {
+if(e.keyCode == 27) {
+	window.toggleTick();
+	window.document.getElementById("menu").style.visibility = "visible";
+	window.time.pause();
+	}
+	
+}
 
 // Pauses/ Unpauses the canvas tick element
-function toggleTick() {
+window.toggleTick = function() {
 
 	text.text = "please wait"
 
@@ -319,11 +330,13 @@ function toggleTick() {
 				if (gameLoop != true) {
 					window.time.startDate = (new Date()).getTime();
 					//window.audio.control.random();
+					window.document.addEventListener("keyup", menu);
 					stage.canvas.width = 992;
 					stage.canvas.height = 752;
 					window.buffs.array[0].run();
 					window.audio.control.play("bgm");
 					window.audio.control.volume("bgm", 0.2);
+					
 					
 				}
 				gameLoop = true;
