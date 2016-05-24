@@ -26,7 +26,7 @@ function Player() {
 	this.vx = 0;
 	this.vy = 0;
 	this.bitmap;
-	this.speed = 8;
+	this.speed = 5;
 	this.friction = 0.98;
 	this.accel = 1.5;
 

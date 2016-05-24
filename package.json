@@ -20,9 +20,10 @@
   },
   "window": {
     "title": "Mexihurder",
-    "width": 1024,
-    "height": 768,
-    "frame": true
+    "width": 992,
+    "height": 752,
+    "frame": true,
+    "toolbar": true
   },
   "devDependencies": {},
   "description": ""

@@ -5,13 +5,16 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
-<body >
-	
-	<canvas id="gameCanvas" width="0" height="0" style="border:0px solid black;"></canvas>
+<body style="background-color: orange;">
+	<div "container">
+	<canvas id="gameCanvas" width="0" height="0" style="border:0px solid black;margin:0px;position: absolute; left:0px;top:0px"></canvas>
+	</div>
 	<div>
-	<progress id="splashLoad" value="0" style="width:70%; height:40px; margin-left:15%; margin-top: 30%"></progress>
+	<div id="container" style="margin-top: 30%; overflow: hidden">
+	<div style="width:70%; margin-left:35%; margin-bottom: 5%"> <img src="assets/loading.gif"></div>
+	<progress id="splashLoad" value="0" style="width:70%; height:40px; margin-left:15%;"></progress>
 	<h1 id="splashText" style="text-align:center; font-family:Arial, Helvetica, sans-serif; text-transform: uppercase">loading</h1>
-	</div>	
+	</div>	</div>
 	<script>
 	var requirejs = require('requirejs');
 	requirejs(['config'], function() {

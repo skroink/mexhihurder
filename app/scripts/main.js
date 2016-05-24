@@ -10,7 +10,6 @@ var easeljs = requirejs('easeljs'),
 	path = require('path'),
 
 
-
 	stage,
 	preload,
 	sounds,
@@ -19,8 +18,8 @@ var easeljs = requirejs('easeljs'),
 	gameLoop = false,
 	text,
 	mexicans = [],
-	wall_Bitmap;
-
+	wall_Bitmap,
+	active_buffs = [];
 
 
 	// GLOBALS
@@ -43,7 +42,25 @@ var easeljs = requirejs('easeljs'),
 				window.time.loop = true;
 				
 			}},
+		timeStamps: [],
+		stampRun: function() {
+			
+
+				for(i in window.time.timeStamps) {
+				try{
+					i = window.time.timeStamps[i];
+					if(i.active != true)
+					{	
+						if(i.timeStamp == window.time.time) {
+						i.active = true;
+						stage.addChild(i.buff.bitmap);
+						}
+					}
+				}catch(err){return}
+			};
+		}
 	};
+
 
 
 createjs.Ticker.paused = true;
@@ -78,6 +95,10 @@ function loadBuffs() {
 			};
 			buff.spritesheet = new createjs.SpriteSheet(buff.spriteData);
 			buff.bitmap = new createjs.Sprite(buff.spritesheet, buff.id)
+
+			buff.bitmap.x = 300;
+			buff.bitmap.y = 300;
+
 		};
 
 
@@ -142,8 +163,9 @@ function loadObjects() {
 
 	
 		requirejs(["scripts/mexicans"], function(m) {
-	
-		m.construct(15);
+		console.log(m);
+		m.list = [];
+		m.construct(7);
 
 		for (var i in m.list) {
 			var mexican = m.list[i];
@@ -180,8 +202,9 @@ function loadObjects() {
 			mexicans.push(mexican);
 
 
+
 		}
-		
+		//console.log(mexicans);
 	})
 
 
@@ -189,13 +212,49 @@ function loadObjects() {
 	
 };
 
+
+window.reload = function() {
+
+	//window.audio.control.pause("bgm");
+
+	var playing = window.document.body.getElementsByTagName('audio');
+
+	for(item in playing){
+		item = playing[item];
+		
+		if(item.currentTime > 0) {
+			console.log(item.id)
+			window.audio.control.pause(item.id);
+			item.currentTime = 0;
+		}
+	}
+
+	stage.canvas.width = 0;
+	stage.canvas.height = 0;
+	toggleTick();
+	window.player = undefined;
+	stage.removeAllChildren();
+	stage.clear()
+	window.buffs.array = [];
+	window.time.timeStamps = [];
+
+	window.win = {points: 0,
+				  text: 0 };
+
+
+
+
+	init();
+
+}
+
 function prepCanvas() {
 	
 
 
 
 	createjs.Ticker.useRAF = true;
-	createjs.Ticker.setFPS(60);
+	createjs.Ticker.setInterval(20);
 
 	console.log("loading primary functions");
 	drawBG();
@@ -214,7 +273,12 @@ function init() {
 	stage = new createjs.Stage(canvas);
 	preload = new createjs.LoadQueue(false);
 	createjs.Sound.alternateExtensions = ["mp3"];
-	
+	if(gameLoop == true) {
+		prepCanvas();
+		requirejs(["scripts/audio"]);		
+	}
+
+
 
 	window.document.addEventListener("assets", function(){
 		gfx = window.preloads.gfx;
@@ -228,7 +292,10 @@ function init() {
 			
 	});
 
-
+	if(gameLoop == true)
+	{
+		gameLoop = false;
+	}
 	createjs.Ticker.addEventListener("tick", tickHandler);
 
 };
@@ -279,8 +346,13 @@ function toggleTick() {
 function tickHandler(event) {
 
 	if (createjs.Ticker.paused != true) {
-
+		window.time.stampRun();
 		var player = window.player;
+
+		if(window.time.time == 120 || window.win.points == 7)
+			window.reload();
+
+
 		// player friction, smoother movement
 		////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////// 

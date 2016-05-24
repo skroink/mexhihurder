@@ -33,13 +33,36 @@ function construct(pos,neg) {
 			});
 		}
 		b.id = list;
-
-
-
 		window.buffs.array.push(b);
 	}	
 
-	
+	for (buff in window.buffs.array)
+	{
+		
+		var counter = buff +1; 
+		var stampCount = window.time.timeStamps.length + 1;
+
+		//buffCount += 1;
+
+		var min = stampCount * counter,
+			max = (stampCount * counter) + 15;
+
+		
+
+		 var stamp =  {
+			timeStamp : Math.round(Math.random() * (max - min) + min),
+			buff : window.buffs.array[buff],
+			active : false
+		};
+
+
+		console.log(stamp);
+		//console.log(window.buffs.array[buff]);
+
+		window.time.timeStamps.push(stamp);
+		//console.log(window.time);
+		//var timeStamp = Math.round(Math.random() * ());
+	}
 }
 
 
@@ -63,11 +86,7 @@ function Buff() {
 			'eagle': function() {window.audio.control.play("runningnotrunning")},
 			'flag': function() {window.audio.control.play("bestpresident")},
 			
-			'money': function() {window.audio.control.play("reallyrich")
-								window.time.loop = false;
-								setTimeout(function(){
-									window.time.loop = true
-								},5000);}
+			'money': function() {window.audio.control.play("reallyrich")}
 
 								
 		},
