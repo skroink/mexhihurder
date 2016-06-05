@@ -1,5 +1,5 @@
 // handles all logic inside every 'tick'
-
+var pushCount = 0;
 var collisionjs = requirejs('ndgmr');
 define(function() {
 	console.log("canvas");
@@ -16,7 +16,7 @@ define(function() {
 		////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////// 
 		player.moveSpeed()
-	
+		
 		////////////////////////////////////////////////////////////////////////////////////
 		// wall collision detection => player
 			var wall_player = ndgmr.checkPixelCollision(window.wall_Bitmap, player.bitmap, 0);
@@ -35,6 +35,25 @@ define(function() {
 
 				
 			};
+
+
+		for (var i in window.time.timeStamps) {
+			if(window.time.timeStamps[i].active == true ){
+			var buff = window.time.timeStamps[i];
+
+			var collision = ndgmr.checkPixelCollision(player.bitmap, buff.buff.bitmap, 0);
+			if(collision) {
+				buff.checked = true;
+				window.stage.removeChild(buff.buff.bitmap);
+				buff.buff.run();
+			}
+			
+
+			}
+		}
+		window.time.timeStamps = window.time.timeStamps.filter(function(n){return n.checked != true});
+
+
 		////////////////////////////////////////////////////////////////////////////////////
 		// Mexican Tick Handler for each in mexicans array
 		for (var i in window.mexicans) {
@@ -45,7 +64,7 @@ define(function() {
 			if (player.bitmap != null) {
 				var collision = ndgmr.checkPixelCollision(mexican.bitmap, player.bitmap, 0);
 				if (collision) {
-
+					
 					playerMid = {
 					x: player.bitmap.x + player.bitmap.getBounds().width / 2,
 					y: player.bitmap.y + player.bitmap.getBounds().width / 2
@@ -77,6 +96,7 @@ define(function() {
 					mexican.bitmap.y += yOut;
 					mexican.velY *= -1.25;
 				}
+				pushFeedBack();
 			}};
 
 				/////////////////////////////////////////////////////////////////////
@@ -127,9 +147,10 @@ define(function() {
 		/// also adds "1" point to win.point
 		var prev_ = window.mexicans.length;
 		window.mexicans = window.mexicans.filter(function(n){return n.dead != true});
-		console.log(prev_);
+		//console.log(prev_);
 		if(prev_ > window.mexicans.length) {
 			window.win.points += 1;
+			window.audio.control.play("icreatedagreatwall");
 		};
 
 
@@ -163,3 +184,12 @@ define(function() {
 
 
 
+function pushFeedBack() {
+	pushCount++;
+	console.log(pushCount);
+	if(pushCount >= 5){
+		
+		var rSound = window.audio.control.random();
+		pushCount = 0;
+	}
+} 

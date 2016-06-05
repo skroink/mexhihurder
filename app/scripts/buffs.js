@@ -52,7 +52,8 @@ function construct(pos,neg) {
 		 var stamp =  {
 			timeStamp : Math.round(Math.random() * (max - min) + min),
 			buff : window.buffs.array[buff],
-			active : false
+			active : false,
+			checked: false
 		};
 
 

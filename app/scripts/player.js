@@ -27,7 +27,7 @@ function Player() {
 	this.vy = 0;
 	this.bitmap;
 	this.speed = 5;
-	this.friction = 0.98;
+	this.friction = 0.99;
 	this.accel = 1.5;
 
 	this.spriteData = {
@@ -47,10 +47,10 @@ function doKeyDown(e) {
 function doKeyUp(e) {
 
 	if(e.keyCode == 37 || e.keyCode == 39)
-	player.vx *= 0.05;
+	player.vx *= 0.01;
 	
 	if(e.keyCode == 38 || e.keyCode == 40)
-	player.vy *= 0.05;
+	player.vy *= 0.01;
 
 	delete keys[e.which]
 
@@ -100,19 +100,15 @@ function keyAction(e){
 
 
 Player.prototype.moveSpeed = function() {
-	if (player.vx < player.speed * 0.04 && player.vx > 0 
-			|| player.vx > -player.speed * 0.04 && player.vx < 0) {
+	if (player.vx <= player.speed && player.vx > 0 
+			|| player.vx >= -player.speed && player.vx < 0) {
 			player.vx = 0;
-		} else {
-			player.vx *= player.friction
-		};
+		} 
 
-		if (player.vy < player.speed * 0.04 && player.vy > 0 
-			|| player.vy > -player.speed * 0.04 && player.vy < 0) {
+		if (player.vy <= player.speed && player.vy > 0 
+			|| player.vy >= -player.speed && player.vy < 0) {
 			player.vy = 0;
-		} else {
-			player.vy *= player.friction
-		};
+		} 
 		player.bitmap.x += player.vx;
 		player.bitmap.y += player.vy;
 };
