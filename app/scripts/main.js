@@ -187,9 +187,8 @@ window.toggleTick = function() {
 					window.document.addEventListener("keyup", menu);
 					window.stage.canvas.width = 992;
 					window.stage.canvas.height = 752;
-					window.buffs.array[0].run();
 					window.audio.control.play("bgm");
-					window.audio.control.volume("bgm", 0.2);
+					window.audio.control.volume("bgm", 0.1);
 					
 					
 				}

@@ -187,7 +187,7 @@ define(function() {
 function pushFeedBack() {
 	pushCount++;
 	console.log(pushCount);
-	if(pushCount >= 15){
+	if(pushCount >= 25){
 		
 		var rSound = window.audio.control.random();
 		pushCount = 0;
