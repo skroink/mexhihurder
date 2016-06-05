@@ -1,5 +1,5 @@
 {
-  "name": "mexihurder",
+  "name": "mexiherder",
   "version": "1.0.0",
   "main": "app/index.html",
   "scripts": {
@@ -22,8 +22,11 @@
     "title": "Mexihurder",
     "width": 992,
     "height": 760,
+    "max_width": 992,
+    "max_height": 760,
     "frame": true,
     "toolbar": true
+
   },
   "devDependencies": {},
   "description": ""
